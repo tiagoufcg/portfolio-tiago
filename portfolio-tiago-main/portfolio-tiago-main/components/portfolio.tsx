@@ -26,6 +26,12 @@ function ProjectGallery() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()
   const galleryImages = projects.flatMap((project) => project.images.map((image) => ({ ...image, projectTitle: project.title })))
 
+  function getScreenContext(src: string) {
+    if (src.includes('lava-jato')) return 'Dashboard — Resumo do Dia'
+    if (src.includes('cardapio')) return 'Dashboard — Seu cardápio'
+    return 'Home — Loja UFCG'
+  }
+
   useEffect(() => {
     if (!carouselApi) return
     const handleSelect = () => setActiveImage(carouselApi.selectedScrollSnap())
@@ -42,8 +48,14 @@ function ProjectGallery() {
       <CarouselContent className="project-carousel-content">
         {galleryImages.map((image, index) => <CarouselItem className="project-carousel-slide" key={image.src}>
           <figure className="project-gallery-item">
-            <img className="project-gallery-image" src={image.src} alt={image.alt} draggable={false} />
-            <figcaption>{image.projectTitle}<span>{index + 1} / {galleryImages.length}</span></figcaption>
+            <div className="project-browser-bar">
+              <span className="project-browser-dots" aria-hidden="true"><i /><i /><i /></span>
+              <span className="project-browser-title">{getScreenContext(image.src)}</span>
+            </div>
+            <div className="project-gallery-image-frame">
+              <img className="project-gallery-image" src={image.src} alt={image.alt} draggable={false} />
+              <figcaption>{image.projectTitle}<span>{index + 1} / {galleryImages.length}</span></figcaption>
+            </div>
           </figure>
         </CarouselItem>)}
       </CarouselContent>
