@@ -37,10 +37,10 @@ export const projects = [
 
 export const skillGroups = [
   { name: 'Linguagens', skills: ['TypeScript', 'JavaScript', 'Python', 'Java', 'SQL', 'HTML', 'CSS'] },
-  { name: 'Frontend', skills: ['React', 'Next.js', 'React Hooks', 'Vite', 'Tailwind CSS'] },
-  { name: 'Backend / BaaS', skills: ['Node.js', 'Express.js', 'APIs REST', 'JWT', 'Supabase'] },
+  { name: 'Frontend', skills: ['React', 'Next.js', 'Vite', 'Tailwind CSS'] },
+  { name: 'Backend / BaaS', skills: ['Node.js', 'Express.js', 'APIs REST', 'Supabase'] },
   { name: 'Bancos e ORMs', skills: ['PostgreSQL', 'MySQL', 'SQLite', 'Prisma', 'Sequelize'] },
-  { name: 'Segurança', skills: ['bcrypt', 'JWT', 'CORS', 'Rate limiting', 'Row Level Security', 'Validação de dados'] },
+  { name: 'Segurança', skills: ['Bcrypt', 'JWT', 'CORS', 'Rate limiting', 'Row Level Security', 'Validação de dados'] },
   { name: 'Arquitetura', skills: ['MVC', 'Repository Pattern', 'Arquitetura em camadas', 'Multi-tenant'] },
   { name: 'DevOps e ferramentas', skills: ['Git', 'GitHub', 'Docker', 'Docker Compose', 'Postman', 'Vercel', 'Render'] },
   { name: 'Métodos e testes', skills: ['Jest', 'Scrum', 'OKRs', 'KPIs', 'Desenvolvimento ágil'] },
