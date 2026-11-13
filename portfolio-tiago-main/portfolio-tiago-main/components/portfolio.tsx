@@ -18,7 +18,6 @@ function ProjectCard({ project, number }: { project: (typeof projects)[number]; 
     <p className="project-description">{project.description}</p>
     <ul className="project-points">{project.points.map((point) => <li key={point}><Check aria-hidden="true" />{point}</li>)}</ul>
     <div className="tag-list">{project.stack.map((item) => <span className="tech-tag" key={item}>{item}</span>)}</div>
-    <div className="project-links">{project.repo && <a href={project.repo} target="_blank" rel="noreferrer">Repositório <ArrowUpRight aria-hidden="true" /></a>}{project.demo && <a href={project.demo} target="_blank" rel="noreferrer">Ver demo <ArrowUpRight aria-hidden="true" /></a>}</div>
   </article>
 }
 
