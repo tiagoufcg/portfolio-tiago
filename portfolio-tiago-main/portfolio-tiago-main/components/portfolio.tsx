@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, Check, Code2, Download, MapPin, Menu, Moon, Sun, X } from 'lucide-react'
 import { experience, projects, skillGroups } from '@/data/portfolio'
+import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 
 const navItems = [['Sobre', '#sobre'], ['Projetos', '#projetos'], ['Experiência', '#experiencia'], ['Habilidades', '#habilidades'], ['Contato', '#contato']]
 
@@ -19,6 +20,41 @@ function ProjectCard({ project, number }: { project: (typeof projects)[number]; 
     <div className="tag-list">{project.stack.map((item) => <span className="tech-tag" key={item}>{item}</span>)}</div>
     <div className="project-links">{project.repo && <a href={project.repo} target="_blank" rel="noreferrer">Repositório <ArrowUpRight aria-hidden="true" /></a>}{project.demo && <a href={project.demo} target="_blank" rel="noreferrer">Ver demo <ArrowUpRight aria-hidden="true" /></a>}</div>
   </article>
+}
+
+function ProjectGallery() {
+  const [activeImage, setActiveImage] = useState(0)
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>()
+  const galleryImages = projects.flatMap((project) => project.images.map((image) => ({ ...image, projectTitle: project.title })))
+
+  useEffect(() => {
+    if (!carouselApi) return
+    const handleSelect = () => setActiveImage(carouselApi.selectedScrollSnap())
+    handleSelect()
+    carouselApi.on('select', handleSelect)
+    return () => {
+      carouselApi.off('select', handleSelect)
+    }
+  }, [carouselApi])
+
+  return <div className="project-gallery reveal">
+    <div className="project-gallery-heading"><span className="section-index">VISÃO GERAL</span><p>Algumas telas dos projetos em desenvolvimento e produção.</p></div>
+    <Carousel className="project-carousel" opts={{ loop: true }} setApi={setCarouselApi} aria-label="Carrossel de imagens dos projetos">
+      <CarouselContent className="project-carousel-content">
+        {galleryImages.map((image, index) => <CarouselItem className="project-carousel-slide" key={image.src}>
+          <figure className="project-gallery-item">
+            <img className="project-gallery-image" src={image.src} alt={image.alt} draggable={false} />
+            <figcaption>{image.projectTitle}<span>{index + 1} / {galleryImages.length}</span></figcaption>
+          </figure>
+        </CarouselItem>)}
+      </CarouselContent>
+      <CarouselPrevious className="project-carousel-button project-carousel-previous" aria-label="Imagem anterior" />
+      <CarouselNext className="project-carousel-button project-carousel-next" aria-label="Próxima imagem" />
+    </Carousel>
+    <div className="project-carousel-dots" aria-label="Selecionar imagem">
+      {galleryImages.map((image, index) => <button className={index === activeImage ? 'is-active' : ''} type="button" onClick={() => carouselApi?.scrollTo(index)} aria-label={`Exibir imagem ${index + 1}`} aria-current={index === activeImage ? 'true' : undefined} key={image.src} />)}
+    </div>
+  </div>
 }
 
 function SkillBadge({ children }: { children: string }) { return <span className="skill-badge">{children}</span> }
@@ -51,7 +87,7 @@ export default function Portfolio() {
 
     <section className="section page-width" id="sobre"><SectionHeading index="01" title="Sobre mim" subtitle="Um pouco da minha trajetória e do que me move."/><div className="about-grid"><div className="about-copy reveal"><p>Sou desenvolvedor Full Stack com experiência prática em aplicações web e APIs REST. Trabalho com autenticação e autorização, arquitetura em camadas, modelagem de dados, Row Level Security, aplicações multi-tenant e deploy em produção.</p><p>Fui Diretor Executivo da CODEX, empresa júnior de TI da UFCG, onde desenvolvi também minha experiência em liderança, gestão de projetos e metodologias ágeis. Gosto de transformar problemas reais em software bem construído, seguro e fácil de usar.</p><a href="#experiencia" className="text-link">Mais sobre minha trajetória <ArrowRight /></a></div><div className="stats-grid">{[['03', 'Produtos SaaS em desenvolvimento'], ['FAPESQ', 'Bolsista de Iniciação Tecnológica'], ['CodeX Jr.', 'Ex-Diretor Executivo e Marketing'], ['SFC', 'Scrum Fundamentals Certified']].map(([value, label]) => <div className="stat-card reveal" key={label}><strong>{value}</strong><span>{label}</span></div>)}</div></div></section>
 
-    <section className="section page-width projects-section" id="projetos"><SectionHeading index="02" title="Projetos em destaque" subtitle="Produtos e sistemas construídos com propósito e atenção aos detalhes."/><div className="projects-grid">{projects.map((project, index) => <ProjectCard project={project} number={`0${index + 1}`} key={project.title} />)}</div></section>
+    <section className="section page-width projects-section" id="projetos"><SectionHeading index="02" title="Projetos em destaque" subtitle="Produtos e sistemas construídos com propósito e atenção aos detalhes."/><div className="projects-grid">{projects.map((project, index) => <ProjectCard project={project} number={`0${index + 1}`} key={project.title} />)}</div><ProjectGallery /></section>
 
     <section className="section page-width" id="experiencia"><SectionHeading index="03" title="Experiência" subtitle="Liderança, colaboração e entrega de ponta a ponta."/><div className="timeline"><div className="timeline-marker"><span /></div><article className="timeline-item reveal"><div className="timeline-meta"><span>{experience.period}</span><span>{experience.location}</span></div><h3>{experience.role}</h3><p className="timeline-company">{experience.company}</p><ul className="timeline-points">{experience.points.map((point) => <li key={point}>{point}</li>)}</ul></article></div></section>
 
