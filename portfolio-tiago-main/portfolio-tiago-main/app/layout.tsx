@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   },
   generator: 'Next.js',
   icons: {
-    icon: '/icon-ts.svg',
-    shortcut: '/icon-ts.svg',
-    apple: '/icon-ts.svg',
+    icon: '/icon-sales.svg',
+    shortcut: '/icon-sales.svg',
+    apple: '/icon-sales.svg',
   },
 }
 
