@@ -20,7 +20,6 @@ export const projects = [
     demo: 'https://lavajato-one.vercel.app',
     images: [
       { src: '/projects/lava-jato-dashboard.png', alt: 'Dashboard do Lava-Jato Gerenciamento' },
-      { src: '/projects/lava-jato-login.png', alt: 'Tela de login do Lava-Jato Gerenciamento' },
     ],
   },
   {
